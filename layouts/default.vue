@@ -2,7 +2,6 @@
 
 <template>
   <NavMenu />
-  Layout: default
   <slot />
   <Footer />
 </template>
