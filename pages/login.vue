@@ -7,12 +7,17 @@
   const login = async (event:any) => {
     event.preventDefault()
     console.log(client.auth)
-    const {user, error} = await client.auth.signInWithPassword({
+    const {data, error} = await client.auth.signInWithPassword({
       email: email.value,
       password: password.value,
-    }) 
-    console.log(user)
+    })
+
+
+    console.log(data)
     console.log(error)
+    if(data) {
+      navigateTo("/")
+    }
   }
 </script>
 
@@ -22,18 +27,36 @@
       <div class="title">
         <h2>SANDIGAN</h2>
       </div>
-      <input type="text" v-model="email"/>  
       <br />
-      <input type="password" v-model="password"/>
+      <div class="login_form">
+      <!-- How the fuck does this work? I will never know-->
+      <p>Email Ad:        
+        <input type="text" v-model="email"/>  
+      </p>
+
       <br />
-      <button @click="login"> </button>
-      
+      <p>Password:  
+        <input type="password" v-model="password"/>
+      </p>
+      <br />
+      <button @click="login"> Login</button>
+      </div>
     </section>
   </form>
 </template>
 
 <style scoped>
+button {
+  align-self:center;
+}
 
+.login_box{
+  border: black;
+  border-style: solid;
+  height: 276px;
+  width: 561px;
+  border-radius: 0px;
+}
 #login {
   display:flex;
   justify-content:center;
@@ -41,6 +64,10 @@
 .title {
   display:flex;
   justify-content:center;
-
+}
+.login_form {
+  display:flex;
+  justify-content:center;
+  flex-direction:column;
 }
 </style>
