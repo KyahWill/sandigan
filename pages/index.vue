@@ -6,11 +6,12 @@
   const driver = neo4j.driver(
     'neo4j+s://60318b06.databases.neo4j.io',
     neo4j.auth.basic('neo4j','Cq-Of1FHfShywvyaq0RpAJaOmIHA6ZVPW9yB6UxxXs8')
-  )
-  const session = driver.session()
-  const personName = 'Alice'
+  ) 
+  const session = driver.session() 
  
-  onMounted( async() => {
+  
+  const isAuthenticated = ref(true)
+  onMounted( async() => { 
     try {
       const result =await session.executeRead(tx => {
         return tx.run(
@@ -20,9 +21,7 @@
         )
       })
       console.log(result)
-      const node = singleRecord.get(0)
 
-      console.log(node.properties.name)
     } finally {
       await session.close()
     } 
@@ -33,37 +32,38 @@
 </script>
 
 <template>
-  <section class="homepage">
-    <div class="grid">
-      <div class="featured_cases">
-        <h2>
-          Featured Cases
-        </h2>
-      </div>
-      <div class="calendar">
-        <h2> Calendar Test </h2>
-
-      </div>
-      <div class="new_cases">
-        <h2> New Cases Test </h2>
-      </div>
-      <div class="reccomendations">
-        <h2> Reccomendations test </h2>
-      </div>
-    </div>
-
-  </section>
+  <div class="homepage">
+    <section class="featured_cases">
+      <h2>
+        Featured Cases
+      </h2>
+    </section>
+    <section class="new_cases">
+      <h2>
+        Recent Cases
+      </h2>
+      <TableComponent /> 
+    </section>
+    <section 
+      v-if="isAuthenticated"
+      class="recommended_cases"
+    >
+      <h2>
+        Reccomended Cases
+      </h2>
+      <TableComponent />
+    </section>
+  </div>
 </template>
 
 <style scoped>
   .homepage {
     display:flex;
     justify-content:center;
+    flex-direction:column;
+    align-items:center;
   }
-  .grid {
-    display:grid;
-    grid-template-columns: 975px 270px;
-    column-gap:24px;
-    row-gap:24px;
+  .homepage section{
+    width:80%;
   }
 </style>
