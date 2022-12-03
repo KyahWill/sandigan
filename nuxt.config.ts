@@ -1,18 +1,21 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  css:['~/assets/styles/main.css'],
   modules: [
-   '@nuxtjs/supabase'
+   '@nuxtjs/supabase',
+   '@nuxtjs/tailwindcss',
   ],
   buildModules: [
   '@nuxtjs/google-fonts',
   ],
   googleFonts:{
-    dowload: true,
-    base64: true,
     families: {
-      Roboto: true,
-      Inter: true,   
+      Inter: [700],   
     }
-  }
+  },
+  css: [
+    '~/assets/styles/main.css',
+  ],
+  build: {
+    transpile: ['vuetify'],
+  },
 })
