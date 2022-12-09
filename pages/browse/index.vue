@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import neo4j from 'neo4j-driver'  
+  import neo4j, { ResultSummary } from 'neo4j-driver'  
   //Remove the capability of the user to see the credentials because this is a security issue
   //Todo in the future  
   const driver = neo4j.driver(
@@ -7,8 +7,7 @@
     neo4j.auth.basic('neo4j','Cq-Of1FHfShywvyaq0RpAJaOmIHA6ZVPW9yB6UxxXs8')
   ) 
   const session = driver.session() 
-  const isAuthenticated = ref(true)
-  const testTableData = [
+  const testTableData = ref([
     {
       title: "Test Title",
       link: "/",
@@ -24,23 +23,30 @@
       link: "/",
       tags: "Test title",
     }
-  ]
+  ])
   onMounted( async() => { 
+    // Load the List of Jurisprudence with limitations
     try {
       const result =await session.executeRead(tx => {
         return tx.run(
-          `MATCH (p:Person)
-          RETURN p.name AS name
-          LIMIT 10`,
+        `
+        Match (Juris) 
+          Return Juris 
+          Limit 10
+          `
         )
       })
-      console.log(result)
+      testTableData.value = result.records.map((item)=> {
+        return{
+          title: item.get(0),
+          link:'/',
+          tags: item.get(0)
+        }
 
+      })
     } finally {
       await session.close()
     } 
-
-    // on application exit:
     await driver.close() 
   })
 
