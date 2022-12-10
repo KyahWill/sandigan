@@ -9,44 +9,72 @@
   ) 
   const session = driver.session() 
  
+  const testTableData = ref([
+    {
+      title: "Test Title",
+      link: "/",
+      tags: ["Test title"],
+    },
+    {
+      title: "Test Title",
+      link: "/",
+      tags: ["Test title"],
+    },
+    {
+      title: "Test Title",
+      link: "/",
+      tags: ["Test title"],
+    }
+  ])
   
   const isAuthenticated = ref(true)
   onMounted( async() => { 
+    // Load the List of Jurisprudence with limitations
     try {
-      const result =await session.executeRead(tx => {
-        return tx.run(
-          `MATCH (p:Person)
-          RETURN p.name AS name
-          LIMIT 10`,
+      const value = await session.executeRead(async (tx) => {
+        const juris_transaction = await tx.run(
+        `
+        Match (Juris :Juris) 
+          Return Juris 
+          Limit 10
+        `
+        )
+        let temp_value = juris_transaction.records.map((item) => {
+          const Juris = item.get(0).properties
+          console.log(Juris.name)
+          return{
+            title: Juris.name,
+            link:Juris.unique_id,
+            tags: [''],
+          }
+        })
+        testTableData.value = await Promise.all(temp_value.map(async(item) => {
+          const tags_transaction = await tx.run(
+            `
+            Match (:Juris {name:"`+item.title+`"}) -- (n) 
+            Return n
+            Limit 10
+          `
+          )
+          const queryTabs = tags_transaction.records.map((item) => {
+            return item.get(0).properties.Title
+          })
+          console.log(queryTabs)
+          return{
+            title: String(item.title),
+            link: String(item.link),
+            tags: [...queryTabs],
+          }
+        })
         )
       })
-      console.log(result)
 
     } finally {
-      await session.close()
-    } 
-
-    // on application exit:
+    await session.close()
     await driver.close() 
+    }
   })
 
-  const testTableData = [
-    {
-      title: "Test Title",
-      link: "/",
-      tags: "Test title",
-    },
-    {
-      title: "Test Title",
-      link: "/",
-      tags: "Test title",
-    },
-    {
-      title: "Test Title",
-      link: "/",
-      tags: "Test title",
-    }
-  ]
 </script>
 
 <template>

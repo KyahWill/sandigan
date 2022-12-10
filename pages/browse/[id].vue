@@ -29,19 +29,25 @@ import neo4j from 'neo4j-driver'
     } 
     // on application exit:
     await driver.close() 
+    const frame = document.getElementById("iframe")
+      if(frame){
+      frame.onload = () => {
+        frame.style.height = frame.contentWindow.document.body.scrollHeight+'px'
+      }
+    }
   })
 
 
 </script>
 
 <template>
-  <div>
-    <iframe width="1000px" height="800px" :src="'/'+file_source"></iframe>
+  <div class="flex justify-center">
+    <iframe width="1000px" id="iframe" scrolling="no" :src="'/'+file_source"></iframe>
   </div>
 </template>
 
 <style scoped>
   iframe {
-    width:90%,
+    overflow:hidden;
   }
 </style>
