@@ -1,53 +1,79 @@
 <script lang="ts" setup>
   import neo4j, { ResultSummary } from 'neo4j-driver'  
+import test from 'node:test';
   //Remove the capability of the user to see the credentials because this is a security issue
   //Todo in the future  
+
   const driver = neo4j.driver(
     'neo4j+s://60318b06.databases.neo4j.io',
     neo4j.auth.basic('neo4j','Cq-Of1FHfShywvyaq0RpAJaOmIHA6ZVPW9yB6UxxXs8')
   ) 
-  const session = driver.session() 
+  const session = driver.session()
+  
   const testTableData = ref([
     {
       title: "Test Title",
       link: "/",
-      tags: "Test title",
+      tags: ["Test title"],
     },
     {
       title: "Test Title",
       link: "/",
-      tags: "Test title",
+      tags: ["Test title"],
     },
     {
       title: "Test Title",
       link: "/",
-      tags: "Test title",
+      tags: ["Test title"],
     }
   ])
+  watch(testTableData, (oldValue,newValue) => {
+  })
   onMounted( async() => { 
     // Load the List of Jurisprudence with limitations
     try {
-      const result =await session.executeRead(tx => {
-        return tx.run(
+      const value = await session.executeRead(async (tx) => {
+        const juris_transaction = await tx.run(
         `
         Match (Juris :Juris) 
           Return Juris 
           Limit 10
+        `
+        )
+        let temp_value = juris_transaction.records.map((item) => {
+          const Juris = item.get(0).properties
+          console.log(Juris.name)
+          return{
+            title: Juris.name,
+            link:Juris.unique_id,
+            tags: [''],
+          }
+        })
+        testTableData.value = await Promise.all(temp_value.map(async(item) => {
+          const tags_transaction = await tx.run(
+            `
+            Match (:Juris {name:"`+item.title+`"}) -- (n) 
+            Return n
+            Limit 10
           `
+          )
+          const queryTabs = tags_transaction.records.map((item) => {
+            return item.get(0).properties
+          })
+          console.log(queryTabs)
+          return{
+            title: item.title,
+            link: item.link,
+            tags: queryTabs,
+          }
+        })
         )
       })
-      testTableData.value = result.records.map((item)=> {
-        return{
-          title: item.get(0),
-          link:'/',
-          tags: item.get(0)
-        }
 
-      })
     } finally {
-      await session.close()
-    } 
+    await session.close()
     await driver.close() 
+    }
   })
 
 </script>
@@ -69,7 +95,7 @@
         <h2>
           Recent Cases
         </h2>
-      
+        
         <TableComponent :tableItem="testTableData"/> 
       </div>
     </section>

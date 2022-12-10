@@ -2,7 +2,7 @@
 
 interface TableContents {
   title: String;
-  tags: String;
+  tags: [String];
   link: String;
 }
 const props = defineProps({
@@ -20,7 +20,7 @@ const props = defineProps({
       :key="index"
     >
       <td>
-        <NuxtLink :href="tableData.link"> {{ tableData.title}} </NuxtLink>
+        <NuxtLink :href="'browse/'+tableData.link"> {{ tableData.title}} </NuxtLink>
       </td>
       <td> {{ tableData.tags }} </td>
     </tr>
