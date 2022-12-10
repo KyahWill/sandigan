@@ -30,7 +30,7 @@
       const result =await session.executeRead(tx => {
         return tx.run(
         `
-        Match (Juris) 
+        Match (Juris :Juris) 
           Return Juris 
           Limit 10
           `
