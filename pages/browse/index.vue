@@ -52,7 +52,7 @@ import test from 'node:test';
         testTableData.value = await Promise.all(temp_value.map(async(item) => {
           const tags_transaction = await tx.run(
             `
-            Match (:Juris {name:"`+item.title+`"}) -- (n) 
+            Match (:Juris {unique_id:`+item.link+`}) -- (n) 
             Return n
             Limit 10
           `
