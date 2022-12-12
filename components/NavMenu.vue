@@ -6,10 +6,14 @@ const links = [
 const client = useSupabaseClient()
 const user = useSupabaseUser()
 
-const searchItem = ref("testing");
-const submit = () => {
-  console.log(searchItem);
+const searchItem = ref('testing');
+const submit = async () => {
+  const search = searchItem.value.replaceAll(" ","+")
+  console.log(search);
+  navigateTo("/browse?search="+search)
 };
+
+
 const logout = async() => {
   const {error }= await client.auth.signOut();
   console.log(error)
@@ -55,7 +59,7 @@ onMounted(async() => {
 
     <section class="searchPage">
       <!-- Here is the search Icon and title-->
-      <form class="w-full">
+      <form class="w-full" @submit.prevent="">
         <img src="~/assets/images/SearchLogo.png" style="width:82;height:90" />
         <h3 class="text-5xl">Sandigan</h3>
         <!-- Here is the search bar -->
@@ -73,7 +77,7 @@ onMounted(async() => {
                   dark:border-gray-600 dark:placeholder-gray-400 
                   dark:text-white dark:focus:ring-blue-500 
                   dark:focus:border-blue-500" 
-            placeholder="Search for Cases" 
+            v-model="searchItem"
             required
           />
           <button 

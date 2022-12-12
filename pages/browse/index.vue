@@ -4,6 +4,9 @@
   //Remove the capability of the user to see the credentials because this is a security issue
   //Todo in the future  
 
+  const route = useRoute();
+  const route_name = route.query.search
+  
   const driver = neo4j.driver(
     'neo4j+s://60318b06.databases.neo4j.io',
     neo4j.auth.basic('neo4j','Cq-Of1FHfShywvyaq0RpAJaOmIHA6ZVPW9yB6UxxXs8')
@@ -23,14 +26,28 @@
     // Load the List of Jurisprudence with limitations
     try {
       const value = await session.executeRead(async (tx) => {
-        const juris_transaction = await tx.run(
-        `
-        Match (Juris :Juris) 
-          Return Juris 
-          Order by rand()
-          Limit 10
-        `
-        )
+        let juris_transaction
+        console.log(route_name !== "")
+        if( route_name){
+          juris_transaction = await tx.run(
+            `
+            Match (Juris :Juris )
+            WHERE Juris.name CONTAINS "`+route_name.replaceAll("+", " ")+`" 
+            Return Juris 
+            Order by rand()
+            Limit 10
+          `
+          )
+        }else{
+          juris_transaction = await tx.run(
+            `
+            Match (Juris :Juris) 
+            Return Juris 
+            Order by rand()
+            Limit 10
+          `
+          )
+        }
         let temp_value = juris_transaction.records.map((item) => {
           const Juris = item.get(0).properties
           return{
