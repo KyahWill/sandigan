@@ -2,9 +2,9 @@
 
   const links = [
     {name:"Home",  link:"/"},
-    {name:"About", link:"/browse"},
-    {name:"Terms of Service", link:"/forum"},
-    {name:"Privacy Policy", link:"/cases"},
+  //  {name:"About", link:"/browse"},
+  //  {name:"Terms of Service", link:"/forum"},
+  //  {name:"Privacy Policy", link:"/cases"},
   ]
 </script>
 
@@ -36,8 +36,9 @@
     width:100%;
     padding-left: 130px;
     background:#202020;
-    position:fixed;
+    position:relative;
     bottom:0;
+    margin-top:40px;
   }
   footer p {
     color:white;

@@ -1,9 +1,7 @@
 <script lang="ts" setup>
   const email = ref('')
   const password = ref('')
-  
   const client = useSupabaseClient()
-
   const login = async (event:any) => {
     event.preventDefault()
     console.log(client.auth)

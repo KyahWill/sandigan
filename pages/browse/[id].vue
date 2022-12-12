@@ -1,6 +1,9 @@
 <script lang="ts" setup>
-import neo4j from 'neo4j-driver'
+  import neo4j from 'neo4j-driver'
   
+  const client = useSupabaseClient()
+  const { data: { user } } = await client.auth.getUser()
+  console.log(user)
   const route = useRoute();
   const route_id = route.params.id
   const file_source = ref("")

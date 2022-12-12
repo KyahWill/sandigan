@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import neo4j, { ResultSummary } from 'neo4j-driver'  
-import test from 'node:test';
+  import test from 'node:test';
   //Remove the capability of the user to see the credentials because this is a security issue
   //Todo in the future  
 
@@ -12,20 +12,10 @@ import test from 'node:test';
   
   const testTableData = ref([
     {
-      title: "Test Title",
-      link: "/",
-      tags: ["Test title"],
+      title: "",
+      link: "",
+      tags: [""],
     },
-    {
-      title: "Test Title",
-      link: "/",
-      tags: ["Test title"],
-    },
-    {
-      title: "Test Title",
-      link: "/",
-      tags: ["Test title"],
-    }
   ])
   watch(testTableData, (oldValue,newValue) => {
   })
@@ -37,6 +27,7 @@ import test from 'node:test';
         `
         Match (Juris :Juris) 
           Return Juris 
+          Order by rand()
           Limit 10
         `
         )
@@ -58,7 +49,7 @@ import test from 'node:test';
           `
           )
           const queryTabs = tags_transaction.records.map((item) => {
-            return item.get(0).properties
+            return item.get(0).properties.Title
           })
           console.log(queryTabs)
           return{

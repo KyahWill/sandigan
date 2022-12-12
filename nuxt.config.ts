@@ -3,11 +3,9 @@ export default defineNuxtConfig({
   modules: [
    '@nuxtjs/supabase',
    '@nuxtjs/tailwindcss',
+   '@pinia/nuxt',
   ],
   css: [
     '~/assets/styles/main.css',
-  ],
-  build: {
-    transpile: ['vuetify'],
-  },  
+  ], 
 })

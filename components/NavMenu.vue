@@ -2,13 +2,27 @@
 const links = [
   { name: "Home", link: "/" },
   { name: "Browse", link: "/browse" },
-  { name: "Forum", link: "/forum" },
-  { name: "Cases", link: "/cases" },
 ];
+const client = useSupabaseClient()
+const user  = ref({})
+
 const searchItem = ref("testing");
 const submit = () => {
   console.log(searchItem);
 };
+const logout = async() => {
+  const result = await client.auth.signOut();
+  console.log(result)
+}
+
+const login = () => {
+  navigateTo("/login")
+}
+onMounted(async() => {
+  const login = await client.auth
+  user.value = login.data
+  console.log(user.value)
+})
 </script>
 
 <template>
@@ -22,6 +36,12 @@ const submit = () => {
       >
         <h3 class="text-lg">{{ link.name }}</h3>
       </NuxtLink>
+      <div v-if="user" class="align-right">
+        <h3 @click="logout"> Log out </h3>
+      </div>
+      <div v-else class="align-right">
+        <h3 @click="login"> Login </h3>
+      </div>
     </section>
     <section class="searchPage">
       <!-- Here is the search Icon and title-->
@@ -46,7 +66,10 @@ const submit = () => {
             placeholder="Search Mockups, Logos..." 
             required
           />
-          <button type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+          <button 
+          @click="submit"
+          type="button" 
+          class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
         </div>
         <!-- Here is the Search button -->
       </form>
@@ -63,6 +86,10 @@ const submit = () => {
   align-items: center;
 
   padding-left: 320px;
+  padding-right: 320px;
+}
+.align-right {
+  margin-left:auto;
 }
 .searchPage {
   width: 900px;

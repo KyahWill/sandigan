@@ -3,6 +3,7 @@
   
   //Remove the capability of the user to see the credentials because this is a security issue
   //Todo in the future
+  const user = useSupabaseClient()
   const driver = neo4j.driver(
     'neo4j+s://60318b06.databases.neo4j.io',
     neo4j.auth.basic('neo4j','Cq-Of1FHfShywvyaq0RpAJaOmIHA6ZVPW9yB6UxxXs8')
@@ -79,19 +80,21 @@
 
 <template>
   <div class="homepage">
-    <section class="featured_cases">
+    <!-- <section class="featured_cases">
       <h2>
         Featured Cases
       </h2>
-    </section>
+    </section> -->
+    <br />
     <section class="new_cases">
       <h2>
         Recent Cases
       </h2>
       <TableComponent :tableItem="testTableData"/> 
     </section>
+    <br />
     <section 
-      v-if="isAuthenticated"
+      v-if="user"
       class="recommended_cases"
     >
       <h2>
@@ -111,5 +114,8 @@
   }
   .homepage section{
     width:80%;
+  }
+  h2 {
+    font-weight:bold;
   }
 </style>
