@@ -42,7 +42,6 @@
         )
         let temp_value = juris_transaction.records.map((item) => {
           const Juris = item.get(0).properties
-          console.log(Juris.name)
           return{
             title: Juris.name,
             link:Juris.unique_id,
@@ -60,7 +59,6 @@
           const queryTabs = tags_transaction.records.map((item) => {
             return item.get(0).properties.Title
           })
-          console.log(queryTabs)
           return{
             title: String(item.title),
             link: String(item.link),

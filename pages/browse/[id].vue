@@ -1,13 +1,39 @@
 <script lang="ts" setup>
   import neo4j from 'neo4j-driver'
-  
   const client = useSupabaseClient()
-  const { data: { user } } = await client.auth.getUser()
-  console.log(user)
+  const file_source = ref("")
+  
+  const user = useSupabaseUser()
+  const {data:user_details, error }= await client.auth.getUser()
+
+  const is_liked = ref(false)  
+
   const route = useRoute();
   const route_id = route.params.id
-  const file_source = ref("")
- 
+  
+  const like = async() => {
+    const {data,error} = await client
+                      .from("user_links")
+                      .insert({
+                        user_id: user_details.user.id,
+                        juris_id: route_id, 
+                      })
+                      .select()
+    is_liked.value = true
+  }
+  const unlike = async() => {
+    try {await client
+          .from("user_links")
+          .delete()
+          .match({
+            user_id: user_details.user.id,
+            juris_id: route_id, 
+          })
+    
+    } finally {
+      is_liked.value = false
+    }
+  }
   //Remove the capability of the user to see the credentials because this is a security issue
   //Todo in the future
   const driver = neo4j.driver(
@@ -17,16 +43,26 @@
   const session = driver.session() 
  
   onMounted( async() => { 
+    if (user_details){
+      console.log(user_details.user?.id)
+      const {data}= await client.from("user_links")
+                                  .select()
+                                  .eq("user_id", user_details.user?.id)
+                                  .eq("juris_id", route_id)
+                                  .single()
+      if(data) {
+        is_liked.value = true
+      }
+    }
     try {
       const result =await session.executeRead(tx => {
         return tx.run(
           `MATCH (j :Juris {unique_id:`+ route_id+`})
           RETURN j.file_url AS url
-          LIMIT 10`,
+          `,
         )
       })
        file_source.value = (result.records[0].get(0))
-       console.log(file_source)
     } finally {
       await session.close()
     } 
@@ -38,18 +74,38 @@
         frame.style.height = frame.contentWindow.document.body.scrollHeight+'px'
       }
     }
+
   })
 
 
 </script>
 
 <template>
-  <div class="flex justify-center">
-    <iframe width="1000px" id="iframe" scrolling="no" :src="'/'+file_source"></iframe>
+  <div class="flex flex-col w-5/6 mx-auto" >
+    <div v-if="user" class="button">
+      <button v-if="is_liked" @click="unlike">
+        <p >Liked</p>
+      </button>
+      <button v-if="!is_liked" @click="like">
+        <p >Like</p>
+      </button>
+    </div>
+    
+    <iframe
+      id="iframe" 
+      scrolling="no" 
+      :src="'/'+file_source">
+    </iframe>
   </div>
 </template>
 
 <style scoped>
+  button {
+    border-color:black;
+    border-width:1px;
+    border-radius: 5px;
+    padding:2px;
+  }
   iframe {
     overflow:hidden;
   }

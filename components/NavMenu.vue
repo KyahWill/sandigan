@@ -4,24 +4,25 @@ const links = [
   { name: "Browse", link: "/browse" },
 ];
 const client = useSupabaseClient()
-const user  = ref({})
+const user = useSupabaseUser()
 
 const searchItem = ref("testing");
 const submit = () => {
   console.log(searchItem);
 };
 const logout = async() => {
-  const result = await client.auth.signOut();
-  console.log(result)
+  const {error }= await client.auth.signOut();
+  console.log(error)
 }
 
 const login = () => {
   navigateTo("/login")
 }
+const signup = () => {
+  navigateTo("/signup")
+}
 onMounted(async() => {
-  const login = await client.auth
-  user.value = login.data
-  console.log(user.value)
+  // getSession()
 })
 </script>
 
@@ -37,12 +38,21 @@ onMounted(async() => {
         <h3 class="text-lg">{{ link.name }}</h3>
       </NuxtLink>
       <div v-if="user" class="align-right">
-        <h3 @click="logout"> Log out </h3>
+        <button type="button"  class="align-right">
+          <h3 @click="logout"> Log out </h3>
+        </button>
       </div>
       <div v-else class="align-right">
-        <h3 @click="login"> Login </h3>
+        <button type="button" style="margin-right:20px;" class="align-right">
+          <h3 @click="login"> Login </h3>
+        </button>
+        
+        <button type="button" class="align-right">
+          <h3 @click="signup"> Sign up </h3>
+        </button>
       </div>
     </section>
+
     <section class="searchPage">
       <!-- Here is the search Icon and title-->
       <form class="w-full">
@@ -63,7 +73,7 @@ onMounted(async() => {
                   dark:border-gray-600 dark:placeholder-gray-400 
                   dark:text-white dark:focus:ring-blue-500 
                   dark:focus:border-blue-500" 
-            placeholder="Search Mockups, Logos..." 
+            placeholder="Search for Cases" 
             required
           />
           <button 
