@@ -42,9 +42,15 @@ onMounted(async() => {
         <h3 class="text-lg">{{ link.name }}</h3>
       </NuxtLink>
       <div v-if="user" class="align-right">
-        <button type="button"  class="align-right">
+        <button type="button" style="margin-right:20px"  class="align-right">
           <h3 @click="logout"> Log out </h3>
         </button>
+        <NuxtLink
+        class="button"
+        href="/profile"
+      >
+        <h3 class="text-lg">Profile</h3>
+      </NuxtLink>
       </div>
       <div v-else class="align-right">
         <button type="button" style="margin-right:20px;" class="align-right">

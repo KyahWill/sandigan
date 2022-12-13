@@ -22,7 +22,7 @@
   ])
   watch(testTableData, (oldValue,newValue) => {
   })
-  onMounted( async() => { 
+  onMounted( async() => {
     // Load the List of Jurisprudence with limitations
     try {
       const value = await session.executeRead(async (tx) => {
@@ -34,7 +34,7 @@
             Match (Juris :Juris )
             WHERE Juris.name CONTAINS "`+route_name.replaceAll("+", " ")+`" 
             Return Juris 
-            Order by rand()
+            Order by Juris.year, Juris.month, Juris.day
             Limit 10
           `
           )

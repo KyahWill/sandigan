@@ -3,44 +3,55 @@
   
   //Remove the capability of the user to see the credentials because this is a security issue
   //Todo in the future
-  const user = useSupabaseClient()
+  const user = useSupabaseUser()
   const driver = neo4j.driver(
     'neo4j+s://60318b06.databases.neo4j.io',
     neo4j.auth.basic('neo4j','Cq-Of1FHfShywvyaq0RpAJaOmIHA6ZVPW9yB6UxxXs8')
   ) 
   const session = driver.session() 
- 
+ const recommendedData = ref([
+    {
+      title: "Loading cases",
+      link: "/",
+      tags: ["loading"],
+    },
+ ])
   const testTableData = ref([
     {
-      title: "Test Title",
+      title: "Loading cases",
       link: "/",
-      tags: ["Test title"],
+      tags: ["loading"],
     },
-    {
-      title: "Test Title",
-      link: "/",
-      tags: ["Test title"],
-    },
-    {
-      title: "Test Title",
-      link: "/",
-      tags: ["Test title"],
-    }
   ])
-  
-  const isAuthenticated = ref(true)
   onMounted( async() => { 
     // Load the List of Jurisprudence with limitations
     try {
       const value = await session.executeRead(async (tx) => {
         const juris_transaction = await tx.run(
         `
-        Match (Juris :Juris) 
+          Match (Juris :Juris) 
           Return Juris 
+          Order by Juris.year DESC, Juris.month DESC, Juris.day DESC
+          Limit 10
+        `
+        )
+        const recommended_juris = await tx.run(
+        `
+          Match (Juris :Juris) 
+          Return Juris 
+          Order by rand()
           Limit 10
         `
         )
         let temp_value = juris_transaction.records.map((item) => {
+          const Juris = item.get(0).properties
+          return{
+            title: Juris.name,
+            link:Juris.unique_id,
+            tags: [''],
+          }
+        })
+        const temp_juris = recommended_juris.records.map((item) => {
           const Juris = item.get(0).properties
           return{
             title: Juris.name,
@@ -64,8 +75,24 @@
             link: String(item.link),
             tags: [...queryTabs],
           }
-        })
-        )
+        }))
+        recommendedData.value = await Promise.all(temp_juris.map(async(item) => {
+          const tags_transaction = await tx.run(
+            `
+            Match (:Juris {unique_id:`+item.link+`}) -- (n) 
+            Return n
+            Limit 10  
+          `
+          )
+          const queryTabs = tags_transaction.records.map((item) => {
+            return item.get(0).properties.Title
+          })
+          return{
+            title: String(item.title),
+            link: String(item.link),
+            tags: [...queryTabs],
+          }
+        }))
       })
 
     } finally {
@@ -83,6 +110,16 @@
         Featured Cases
       </h2>
     </section> -->
+    <section 
+      v-if="user"
+      class="recommended_cases"
+    >
+      <h2>
+        Reccomended Cases
+      </h2>
+      <TableComponent :tableItem="recommendedData"/>
+    </section>
+    <br />
     <br />
     <section class="new_cases">
       <h2>
@@ -91,15 +128,6 @@
       <TableComponent :tableItem="testTableData"/> 
     </section>
     <br />
-    <section 
-      v-if="user"
-      class="recommended_cases"
-    >
-      <h2>
-        Reccomended Cases
-      </h2>
-      <TableComponent :tableItem="testTableData"/>
-    </section>
   </div>
 </template>
 
