@@ -6,7 +6,7 @@ const links = [
 const client = useSupabaseClient()
 const user = useSupabaseUser()
 
-const searchItem = ref('testing');
+const searchItem = ref('');
 const submit = async () => {
   const search = searchItem.value.replaceAll(" ","+")
   console.log(search);
@@ -42,15 +42,15 @@ onMounted(async() => {
         <h3 class="text-lg">{{ link.name }}</h3>
       </NuxtLink>
       <div v-if="user" class="align-right">
-        <button type="button" style="margin-right:20px"  class="align-right">
+        <button type="button" class="align-right">
           <h3 @click="logout"> Log out </h3>
         </button>
         <NuxtLink
-        class="button"
-        href="/profile"
-      >
-        <h3 class="text-lg">Profile</h3>
-      </NuxtLink>
+          class="button"
+          href="/profile"
+        >
+          <h3 class="text-lg">Profile</h3>
+        </NuxtLink>
       </div>
       <div v-else class="align-right">
         <button type="button" style="margin-right:20px;" class="align-right">
@@ -84,12 +84,13 @@ onMounted(async() => {
                   dark:text-white dark:focus:ring-blue-500 
                   dark:focus:border-blue-500" 
             v-model="searchItem"
+            placeholder="Find Legal Materials for your needs"
             required
           />
           <button 
           @click="submit"
           type="button" 
-          class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+          class="text-white absolute right-2.5 bottom-2.5 bg-neutral-700 hover:bg-neutral-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
         </div>
         <!-- Here is the Search button -->
       </form>
@@ -100,7 +101,7 @@ onMounted(async() => {
 <style scoped>
 .header {
   background: #202020;
-  height: 100px;
+  height: 32px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -110,6 +111,8 @@ onMounted(async() => {
 }
 .align-right {
   margin-left:auto;
+  display:flex;
+  flex-direction:row;
 }
 .searchPage {
   width: 900px;

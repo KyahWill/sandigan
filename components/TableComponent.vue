@@ -1,10 +1,5 @@
 <script setup lang="ts">
-
-interface TableContents {
-  title: String;
-  tags: [String];
-  link: String;
-}
+import TableContents from "~/types/tables";
 const props = defineProps({
   tableItem: {
     type: Array<TableContents>,
@@ -14,44 +9,47 @@ const props = defineProps({
 </script>
 
 <template>
-  <table>
-    <tr
-        v-for="(tableData, index) in props.tableItem" 
-      :key="index"
-    >
-      <td>
-        <NuxtLink :href="'browse/'+tableData.link"> {{ tableData.title}} </NuxtLink>
-      </td>
-      <td class="tags"> 
-        <p v-for="(tag, index) in tableData.tags" :key="index">{{tag}}</p>
-      </td>
-    </tr>
-  </table>
+  <div class="table">
+    <div v-for="(tableData, index) in props.tableItem" id="row" :key="index">
+      <section>
+        <NuxtLink :href="'browse/' + tableData.link">
+          {{ tableData.title }}
+        </NuxtLink>
+        <p style="font-size: small">
+          {{ tableData.date }}
+        </p>
+        <hr />
+        <div class="flex flex-row mt-1">
+          <p
+            v-for="(tag, tagIndex) in tableData.tags"
+            :key="tagIndex"
+            class="tags"
+          >
+            {{ tag }}
+          </p>
+        </div>
+      </section>
+    </div>
+  </div>
 </template>
 <style scoped>
-tr{
+section {
+  margin-bottom: 10px;
+  padding: 12px;
   border: 1px solid black;
+  border-radius: 10px;
+  box-shadow: black;
   border-collapse: collapse;
 }
-p {
+.tags {
+  font-size: smaller;
   background: black;
   color: white;
-  border-radius:20px;
-  padding:5px;
-  margin: 5px;
-  width:fit-content;
+  border-radius: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-right: 5px;
+  width: fit-content;
   height: fit-content;
-}
-.tags { 
-  flex:1;
-  display:flex;
-  flex-flow: row wrap;
-}
-td {
-  text-decoration:none!important;
-  color:black;
-}
-table {
-  width: 100%;
 }
 </style>
