@@ -31,7 +31,7 @@ const testTableData: Ref<Array<TableContent>> = ref([
   testData
 ]);
 
-onMounted(async () => {
+onServerPrefetch(async () => {
   // Load the List of Jurisprudence with limitations
 
   try {
@@ -48,7 +48,7 @@ onMounted(async () => {
           Match (Juris :Juris) 
           Return Juris 
           Order by Juris.year DESC, Juris.month DESC, Juris.day DESC
-          Limit 10
+          Limit 5  
         `
       );
       const recommendedJuris = await tx.run(

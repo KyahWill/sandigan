@@ -50,6 +50,7 @@ onMounted(async () => {
             title: table_records.name,
             link: table_records.unique_id,
             tags: [""],
+            date: table_records.month + "-"+table_records.day + "-"+ table_records.year
           };
         })
       );
@@ -74,7 +75,7 @@ onMounted(async () => {
             title: String(item.title),
             link: String(item.link),
             tags: [...queryTabs],
-            date: item.month+"-"
+            date: String(item.date)
           };
         })
       );

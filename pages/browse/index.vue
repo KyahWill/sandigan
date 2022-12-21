@@ -1,5 +1,6 @@
 <!-- eslint-disable import/no-named-as-default-member -->
 <script lang="ts" setup>
+
 import neo4j from "neo4j-driver";
 import { Ref } from "vue";
 import TableContent from "~/types/tables";
@@ -22,7 +23,7 @@ const testData: TableContent = {
 }
 const query = ref('')
 const testTableData: Ref<Array<TableContent>> = ref([testData]);
-onMounted(async () => {
+async () => {
   // Load the List of Jurisprudence with limitations
   try {
     await session.executeRead(async (tx: any) => {
@@ -46,6 +47,7 @@ onMounted(async () => {
             Limit 10
           `
       }
+      console.log(query.value)
       const jurisTransaction = await tx.run(query.value);
       const temporaryValue = jurisTransaction.records.map((item: any) => {
         const Juris = item.get(0).properties;
@@ -84,7 +86,7 @@ onMounted(async () => {
     await session.close();
     await neo4jDriver.close();
   }
-});
+};
 </script>
 
 <template>
