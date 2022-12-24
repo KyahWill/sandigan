@@ -3,7 +3,7 @@
 import { Ref } from "vue";
 import TableContent from "~/types/tables";
 
-const filterText = ref("");
+
 const route = useRoute();
 const routeName = route.query.search;
 
@@ -14,18 +14,9 @@ onServerPrefetch(async() => {
 
   const query = (routeName)?  querySearch(String(routeName)): queryLatest()
   const juris = useGraphQuery(graphDriver, query)
-  tableData.value = await Promise.all(
-    (await juris).map(async(item) => {
-      const tags = (await useGraphQuery(graphDriver, queryTags(item.unique_id)))
-        .map((tag) => {return tag.Title})
-      return {
-        title: item.name,
-        link: item.link,
-        tags: tags,
-        date: item.date
-      }
-    })
-  )
+  
+  tableData.value = await createTableContent(juris,graphDriver)
+  
 });
 </script>
 

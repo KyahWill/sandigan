@@ -1,4 +1,5 @@
 <script setup>
+  const filterText = ref("");
 
 </script>
 <template>
