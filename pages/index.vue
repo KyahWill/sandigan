@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import neo4j from "neo4j-driver";
 import { Ref } from "vue";
 import TableContent from "~/types/tables"
 
@@ -9,11 +8,8 @@ const client = useSupabaseClient();
 const user = useSupabaseUser();
 const { data: user_details, error } = await client.auth.getUser();
 
-const driver = neo4j.driver(
-  "neo4j+s://60318b06.databases.neo4j.io",
-  neo4j.auth.basic("neo4j", "Cq-Of1FHfShywvyaq0RpAJaOmIHA6ZVPW9yB6UxxXs8")
-);
-const session = driver.session();
+const driver = useDriver()
+
 const recommendedData = ref([
   {
     title: "Loading cases",
@@ -21,20 +17,19 @@ const recommendedData = ref([
     tags: ["loading"],
   },
 ]);
-const testData: TableContent ={
-  title: "Loading cases",
+
+const testTableData: Ref<Array<TableContent>> = useState( "recommended", () => { return [{
+  title: "",
   link: "/",
-  tags: ["loading"],
-  date: "1-1-1800"
-}
-const testTableData: Ref<Array<TableContent>> = ref([
-  testData
-]);
+  tags: ["test"],
+  date: "12,12,200"
+}]});
 
 onServerPrefetch(async () => {
   // Load the List of Jurisprudence with limitations
-
-  try {
+  
+  const session = driver.session();
+    
     const { data } = await client
       .from("user_links")
       .select()
@@ -112,7 +107,6 @@ onServerPrefetch(async () => {
               item.link +
               `}) -- (n) 
             Return n
-            Limit 10  
           `
           );
           const queryTabs = tags_transaction.records.map((item) => {
@@ -127,10 +121,10 @@ onServerPrefetch(async () => {
         })
       );
     });
-  } finally {
+  
     await session.close();
     await driver.close();
-  }
+  console.log(testTableData)
 });
 </script>
 
