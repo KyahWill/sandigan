@@ -4,15 +4,11 @@
   const client = useSupabaseClient()
   const login = async (event:any) => {
     event.preventDefault()
-    console.log(client.auth)
+
     const {data, error} = await client.auth.signInWithPassword({
       email: email.value,
       password: password.value,
     })
-
-
-    console.log(data)
-    console.log(error)
     if(data) {
       navigateTo("/")
     }

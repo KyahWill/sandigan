@@ -9,7 +9,6 @@ const user = useSupabaseUser()
 const searchItem = ref('');
 const submit = async () => {
   const search = searchItem.value.replaceAll(" ","+")
-  console.log(search);
   navigateTo("/browse?search="+search)
 };
 

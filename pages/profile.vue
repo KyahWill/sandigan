@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import neo4j from "neo4j-driver";
 import {Ref} from 'vue'
 import TableContent from "~/types/tables"
 definePageMeta({
@@ -11,10 +10,7 @@ const user = useSupabaseUser();
 const client = useSupabaseClient();
 const { data: user_details, error } = await client.auth.getUser();
 
-const driver = neo4j.driver(
-  "neo4j+s://60318b06.databases.neo4j.io",
-  neo4j.auth.basic("neo4j", "Cq-Of1FHfShywvyaq0RpAJaOmIHA6ZVPW9yB6UxxXs8")
-);
+const driver = useDriver()
 const session = driver.session();
 const testData: TableContent = {
   title:"Loading",

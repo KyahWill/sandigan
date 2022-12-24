@@ -19,7 +19,6 @@ export const createTableContent = async(juris: Promise<any[]>, graphDriver: Driv
     .map((tag) => {
       return tag.Title
     })
-    console.log(item)
     return {
       title: item.name,
       link: String(item.unique_id),
@@ -28,7 +27,6 @@ export const createTableContent = async(juris: Promise<any[]>, graphDriver: Driv
     }
   })
   )
-  console.log(output)
   return output
 } 
 
