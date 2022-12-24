@@ -8,16 +8,13 @@ const route = useRoute();
 const routeName = route.query.search;
 
 const graphDriver = useDriver()
-
 const tableData: Ref<Array<TableContent>> = useState('tableData',() =>[]);
-onServerPrefetch(async() => {
 
-  const query = (routeName)?  querySearch(String(routeName)): queryLatest()
-  const juris = useGraphQuery(graphDriver, query)
+const query = (routeName)?  querySearch(String(routeName)): queryLatest()
+const juris = useGraphQuery(graphDriver, query)
+
+tableData.value = await createTableContent(juris,graphDriver)
   
-  tableData.value = await createTableContent(juris,graphDriver)
-  
-});
 </script>
 
 <template>
