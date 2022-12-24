@@ -19,16 +19,25 @@ export const createTableContent = async(juris: Promise<any[]>, graphDriver: Driv
     .map((tag) => {
       return tag.Title
     })
+    console.log(item)
     return {
       title: item.name,
-      link: item.unique_id,
+      link: String(item.unique_id),
       tags: tags,
       date: item.month+"-"+item.day+"-"+item.year
     }
   })
   )
+  console.log(output)
   return output
 } 
+
+export const queryNodeId = (id: String) => {
+  return `
+  MATCH (j :Juris {unique_id:`+ id+`})
+  RETURN j
+  `
+}
 export const queryLatest = () => {
     return `
     MATCH (juris :Juris)
