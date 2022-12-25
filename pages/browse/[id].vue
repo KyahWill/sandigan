@@ -68,14 +68,7 @@
   title:test[0].name,
 })
   // })
-onMounted( ()=> {
-  const frame = document.getElementById("iframe")
-    if(frame){
-      frame.onload = () => {
-        frame.style.height = frame.contentWindow.document.body.scrollHeight+'px'
-      }
-    }
-})
+
 </script>
 
 <template>
