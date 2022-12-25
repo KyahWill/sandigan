@@ -38,7 +38,7 @@
   const graphDriver = useDriver()
 
  
-  onServerPrefetch(async() => { 
+  // onServerPrefetch(async() => { 
     // if (user_details){
     //   console.log(user_details.user?.id)
     //   const {data}= await client.from("user_links")
@@ -65,7 +65,7 @@
     // on application exit:
     await graphDriver.close() 
 
-  })
+  // })
 onMounted( ()=> {
   const frame = document.getElementById("iframe")
     if(frame){
