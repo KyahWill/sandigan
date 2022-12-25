@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+
 import { Ref } from "vue";
 import TableContent from "~/types/tables"
 
@@ -16,6 +17,9 @@ const recentJuris: Ref<Array<TableContent>> = useState( "recommended", () => { r
 // recentJuris.value = await createTableContent(juris,graphDriver)
 recentJuris.value =  await useGraphQueryExperiment(graphDriver,queryLatestExperiment())
 
+useHead({
+  title:"Sandigan: Philippine Legal Repository",
+})
 </script>
 
 <template>

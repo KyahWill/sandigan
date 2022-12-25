@@ -64,7 +64,9 @@
     file_source.value = (test[0].file_url)
     // on application exit:
     await graphDriver.close() 
-
+    useHead({
+  title:test[0].name,
+})
   // })
 onMounted( ()=> {
   const frame = document.getElementById("iframe")

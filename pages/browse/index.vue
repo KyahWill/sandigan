@@ -14,7 +14,9 @@ const tableData: Ref<Array<TableContent>> = useState('tableData',() =>[]);
 // const juris = useGraphQuery(graphDriver, query)
 // tableData.value = await createTableContent(juris,graphDriver)
 tableData.value =  await useGraphQueryExperiment(graphDriver,queryLatestExperiment())
-
+useHead({
+  title:"Browse Jurisprudence",
+})
 </script>
 
 <template>

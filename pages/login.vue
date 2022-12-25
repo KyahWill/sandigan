@@ -9,9 +9,7 @@
       email: email.value,
       password: password.value,
     })
-    if(data) {
-      navigateTo("/")
-    }
+    if(data) { navigateTo("/") }
   }
 </script>
 
