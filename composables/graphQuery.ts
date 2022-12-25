@@ -11,6 +11,24 @@ export const useGraphQuery =  async(driver: Driver, query: String): Promise<Arra
     await session.close();
     return output
 }
+export const useGraphQueryExperiment =  async(driver: Driver, query: String): Promise<Array<TableContent>> => {
+  const session = driver.session();
+  const output = await session.executeRead(async (tx: any) => {
+      const graphTransaction = await tx.run(query);
+      return graphTransaction.records.map((item: any) => {
+        const properties = item.get(0).properties
+          return {
+            title: properties.name,
+            link: String(properties.unique_id),
+            tags: item.get(1),
+            date: properties.month+"-"+properties.day+"-"+properties.year
+          }          
+          // [item.get(0).properties, item.get(1)];
+      });        
+  });
+  await session.close();
+  return output
+}
 
 export const createTableContent = async(juris: Promise<any[]>, graphDriver: Driver): TableContent[] => {
   const output = await Promise.all((await juris)
@@ -30,6 +48,15 @@ export const createTableContent = async(juris: Promise<any[]>, graphDriver: Driv
   return output
 } 
 
+export const queryLatestExperiment = () => {
+  return `
+  MATCH (juris :Juris) 
+  with juris Order by juris.year desc limit 10
+  MATCH (juris) --> (legalTerm :LegalTerm)
+  return juris, collect(legalTerm.Title)
+  `
+}
+
 export const queryNodeId = (id: String) => {
   return `
   MATCH (j :Juris {unique_id:`+ id+`})
@@ -43,7 +70,7 @@ export const queryLatest = () => {
 
     order by juris.year
     desc
-    limit 10;
+    limit 1;
     `
 }
 export const querySearch = (search :String) => {
