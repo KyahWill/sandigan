@@ -7,7 +7,7 @@ const client = useSupabaseClient()
 const user = useSupabaseUser()
 
 const searchItem = ref('');
-const submit = async () => {
+const submit = () => {
   const search = searchItem.value.replaceAll(" ","+")
   navigateTo("/browse?search="+search)
 };
@@ -64,7 +64,7 @@ onMounted(async() => {
 
     <section class="searchPage">
       <!-- Here is the search Icon and title-->
-      <form class="w-full">
+      <form class="w-full" @submit.prevent="submit">
         <img src="~/assets/images/SearchLogo.png" style="width:82;height:90" />
         <h3 class="text-5xl">Sandigan</h3>
         <!-- Here is the search bar -->
@@ -86,10 +86,9 @@ onMounted(async() => {
             placeholder="Find Legal Materials for your needs"
             required
           />
-          <button 
-          @click="submit"
-          type="button" 
-          class="text-white absolute right-2.5 bottom-2.5 bg-neutral-700 hover:bg-neutral-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+          <input
+          type="submit"
+          class="text-white absolute right-2.5 bottom-2.5 bg-neutral-700 hover:bg-neutral-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" />
         </div>
         <!-- Here is the Search button -->
       </form>

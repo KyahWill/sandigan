@@ -10,7 +10,7 @@ const routeName = route.query.search;
 const graphDriver = useDriver()
 const tableData: Ref<Array<TableContent>> = useState('tableData',() =>[]);
 
-const query = (routeName)?  querySearch(String(routeName)): queryLatestExperiment()
+const query = (routeName)?  querySearch(String(routeName).toUpperCase()): queryLatestExperiment()
 console.log(query)
 // const juris = useGraphQuery(graphDriver, query)
 // tableData.value = await createTableContent(juris,graphDriver)
