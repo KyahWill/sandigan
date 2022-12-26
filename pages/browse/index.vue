@@ -4,16 +4,18 @@ import { Ref } from "vue";
 import TableContent from "~/types/tables";
 
 
-// const route = useRoute();
-// const routeName = route.query.search;
+const route = useRoute();
+const routeName = route.query.search;
 
 const graphDriver = useDriver()
 const tableData: Ref<Array<TableContent>> = useState('tableData',() =>[]);
 
-// const query = (routeName)?  querySearch(String(routeName)): queryLatest()
+const query = (routeName)?  querySearch(String(routeName)): queryLatestExperiment()
+console.log(query)
 // const juris = useGraphQuery(graphDriver, query)
 // tableData.value = await createTableContent(juris,graphDriver)
-tableData.value =  await useGraphQueryExperiment(graphDriver,queryLatestExperiment())
+tableData.value =  await useGraphQueryExperiment(graphDriver,query)
+console.log(tableData.value)
 useHead({
   title:"Browse Jurisprudence",
 })

@@ -64,7 +64,7 @@ onMounted(async() => {
 
     <section class="searchPage">
       <!-- Here is the search Icon and title-->
-      <form class="w-full" @submit.prevent="">
+      <form class="w-full">
         <img src="~/assets/images/SearchLogo.png" style="width:82;height:90" />
         <h3 class="text-5xl">Sandigan</h3>
         <!-- Here is the search bar -->

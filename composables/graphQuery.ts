@@ -75,11 +75,11 @@ export const queryLatest = () => {
 }
 export const querySearch = (search :String) => {
     return `
-    MATCH (juris :Juris {name: "` +search+`"})
-    return juris
-    order by juris.year
-    desc
-    limit 10;
+    MATCH (juris :Juris)
+    WHERE juris.name  CONTAINS '`+search+`'
+    with juris Order by juris.year desc limit 10
+    MATCH (juris) --> (legalTerm :LegalTerm)
+    return juris, collect(legalTerm.Title)
     `
 }
 export const queryTags = (juris :String) => {
