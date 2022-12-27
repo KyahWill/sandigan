@@ -36,7 +36,7 @@ useHead({
     <br />
     <br />
     <section class="new_cases">
-      <h2>Recent Cases</h2>
+      <h2 class="text-xl">New Labor Case</h2>
       <TableComponent :tableItem="recentJuris" />
     </section>
     <br />
@@ -52,8 +52,5 @@ useHead({
 }
 .homepage section {
   width: 80%;
-}
-h2 {
-  font-weight: bold;
 }
 </style>

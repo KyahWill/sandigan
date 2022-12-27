@@ -36,9 +36,6 @@
     width:100%;
     padding-left: 130px;
     background:#202020;
-    position:relative;
-    bottom:0;
-    margin-top:40px;
   }
   footer p {
     color:white;

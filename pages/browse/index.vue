@@ -23,10 +23,10 @@ useHead({
 
 <template>
   <div class="homepage">
-    <section class="featured_cases">
+    <!-- <section class="featured_cases">
       <strong> Featured Cases </strong>
     </section>
-    <br /><br />
+    <br /><br /> -->
     <section class="browse_cases">
       <BrowseFilter />
 

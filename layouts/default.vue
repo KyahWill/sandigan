@@ -3,10 +3,14 @@
 </script>
 
 <template>
-  <NavMenu />
-  <slot />
+
+    <div class="bg-gray-200 min-h-screen ">
+      <NavMenu />
+      <slot />
+    </div>
   <Footer />
 </template>
 
 <style scoped>
+
 </style>

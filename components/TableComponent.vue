@@ -11,7 +11,7 @@ const props = defineProps({
 <template>
   <div class="table">
     <div v-for="(tableData, index) in props.tableItem" id="row" :key="index">
-      <section>
+      <section class="bg-white rounded-lg">
         <NuxtLink :href="'browse/' + tableData.link">
           {{ tableData.title }}
         </NuxtLink>
@@ -45,11 +45,8 @@ section {
   font-size: smaller;
   background: black;
   color: white;
-  border-radius: 10px;
   padding-left: 5px;
   padding-right: 5px;
   margin-right: 5px;
-  width: fit-content;
-  height: fit-content;
 }
 </style>
