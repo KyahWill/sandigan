@@ -1,6 +1,6 @@
 <script setup>
   const filterText = ref("");
-  
+  const options = ["tests", "TEst123", "Sample", "double sample", "alphabet"]
 </script>
 <template>
       <div class="border border-black rounded-lg
@@ -12,12 +12,13 @@
         <h2>Filters:</h2>  
         <!-- insert autocomplete here -->
         <label>Tags</label>
-        <input
-          id="search"
-          v-model="filterText"
-          type="text"
+        <select
           placeholder="Type here..."
-        />
+        >
+          <option v-for="option in options">
+            {{ option }}
+          </option>
+        </select>
         <!-- 
           p v-for tags in selected tags
             add close button

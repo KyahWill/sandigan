@@ -1,6 +1,6 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 
-import { Ref } from "vue";
+import { Ref } from "vue"
 import TableContent from "~/types/tables"
 
 //Remove the capability of the user to see the credentials because this is a security issue
@@ -23,7 +23,7 @@ useHead({
 </script>
 
 <template>
-  <div class="homepage">
+  <div class="flex justify-center flex-col ">
     <!-- <section class="featured_cases">
       <h2>
         Featured Cases
@@ -35,7 +35,7 @@ useHead({
     </section> -->
     <br />
     <br />
-    <section class="new_cases">
+    <section class="w-9/12 mx-auto" >
       <h2 class="text-xl">New Labor Case</h2>
       <TableComponent :tableItem="recentJuris" />
     </section>
@@ -44,13 +44,4 @@ useHead({
 </template>
 
 <style scoped>
-.homepage {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-}
-.homepage section {
-  width: 80%;
-}
 </style>
