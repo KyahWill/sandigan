@@ -19,11 +19,11 @@ const props = defineProps({
           {{ tableData.date }}
         </p>
         <hr />
-        <div class="flex flex-row mt-1">
+        <div class="flex flex-row flex-wrap">
           <p
             v-for="(tag, tagIndex) in tableData.tags"
             :key="tagIndex"
-            class="tags"
+            class="tags mt-2"
           >
             {{ tag }}
           </p>
