@@ -12,10 +12,13 @@ import TableContent from "~/types/tables"
 const graphDriver = useDriver()
 const recentJuris: Ref<Array<TableContent>> = useState( "recommended", () => { return []});
 
+onMounted( async()=> {
+  recentJuris.value =  await useGraphQueryExperiment(graphDriver,queryLatestExperiment())
+})
+
 // const query: String = queryLatest()
 // const juris = useGraphQuery(graphDriver, query)
 // recentJuris.value = await createTableContent(juris,graphDriver)
-recentJuris.value =  await useGraphQueryExperiment(graphDriver,queryLatestExperiment())
 
 useHead({
   title:"Sandigan: Philippine Legal Repository",
