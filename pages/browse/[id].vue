@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  const client = useSupabaseClient()
+  // const client = useSupabaseClient()
   const file_source = useState('jurisprudence', () =>{return ''})
   
   // const user = useSupabaseUser()
@@ -60,7 +60,7 @@
       //     RETURN j.file_url AS url
       //     `,
       //   )
-      // })
+      // })Q
     file_source.value = (test[0].file_url)
     // on application exit:
     await graphDriver.close() 
