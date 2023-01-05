@@ -3,15 +3,13 @@ const links = [
   { name: "Home", link: "/" },
   { name: "Browse", link: "/browse" },
 ];
-const client = useSupabaseClient()
-const user = useSupabaseUser()
 
 
 
 
 const logout = async() => {
-  const {error }= await client.auth.signOut();
-  console.log(error)
+  // const {error }= await client.auth.signOut();
+  // console.log(error)
 }
 
 const login = () => {
