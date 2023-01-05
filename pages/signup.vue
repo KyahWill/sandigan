@@ -1,20 +1,20 @@
 <script lang="ts" setup>
   const email = ref('')
   const password = ref('')
-  const client = useSupabaseClient()
-  const signup = async (event:any) => {
-    event.preventDefault()
-    console.log(client.auth)
-    const {data, error} = await client.auth.signUp({
-      email: email.value,
-      password: password.value,
-    })
-    console.log(data)
-    console.log(error)
-    if(data) {
-      navigateTo("/")
-    }
-  }
+  // const client = useSupabaseClient()
+  // const signup = async (event:any) => {
+  //   event.preventDefault()
+  //   console.log(client.auth)
+  //   const {data, error} = await client.auth.signUp({
+  //     email: email.value,
+  //     password: password.value,
+  //   })
+  //   console.log(data)
+  //   console.log(error)
+  //   if(data) {
+  //     navigateTo("/")
+  //   }
+  // }
 </script>
 
 <template>

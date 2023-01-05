@@ -1,15 +1,15 @@
 <script lang="ts" setup>
   const email = ref('')
   const password = ref('')
-  const client = useSupabaseClient()
+  // const client = useSupabaseClient()
   const login = async (event:any) => {
     event.preventDefault()
 
-    const {data, error} = await client.auth.signInWithPassword({
-      email: email.value,
-      password: password.value,
-    })
-    if(data) { navigateTo("/") }
+    // const {data, error} = await client.auth.signInWithPassword({
+    //   email: email.value,
+    //   password: password.value,
+    // })
+    // if(data) { navigateTo("/") }
   }
 </script>
 
