@@ -1,70 +1,71 @@
 <script lang="ts" setup>
   // const client = useSupabaseClient()
-  const file_source = useState('jurisprudence', () =>{return ''})
-  
-  // const user = useSupabaseUser()
-  // const {data:user_details, error }= await client.auth.getUser()
+const file_source = useState('jurisprudence', () =>{return ''})
 
-  // const is_liked = ref(false)  
+// const user = useSupabaseUser()
+// const {data:user_details, error }= await client.auth.getUser()
 
-  const route = useRoute();
-  const route_id = route.params.id
-  
-  // const like = async() => {
-  //   await client
-  //     .from("user_links")
-  //     .insert({
-  //       user_id: user_details.user.id,
-  //       juris_id: route_id, 
-  //     })
-  //     .select()
-  //   is_liked.value = true
-  // }
-  // const unlike = async() => {
-  //   try {await client
-  //         .from("user_links")
-  //         .delete()
-  //         .match({
-  //           user_id: user_details.user.id,
-  //           juris_id: route_id, 
-  //         })
-    
-  //   } finally {
-  //     is_liked.value = false
-  //   }
-  // }
-  //Remove the capability of the user to see the credentials because this is a security issue
-  //Todo in the future
-  const graphDriver = useDriver()
+// const is_liked = ref(false)  
 
- 
-  // onServerPrefetch(async() => { 
-    // if (user_details){
-    //   console.log(user_details.user?.id)
-    //   const {data}= await client.from("user_links")
-    //                               .select()
-    //                               .eq("user_id", user_details.user?.id)
-    //                               .eq("juris_id", route_id)
-    //                               .single()
-    //   if(data) {
-    //     is_liked.value = true
-    //   }
-    // }
-    const query = queryNodeId(String(route_id))
-    const test = await useGraphQuery(graphDriver, query)
-    // console.log(query)
-    // console.log(test)
-    // const result =await session.executeRead(tx => {
-      //   return tx.run(
-      //     `MATCH (j :Juris {unique_id:`+ route_id+`})
-      //     RETURN j.file_url AS url
-      //     `,
-      //   )
-      // })Q
-    file_source.value = (test[0].file_url)
-    // on application exit:
-    await graphDriver.close() 
-    useHead({
+const route = useRoute();
+const route_id = route.params.id
+
+// const like = async() => {
+//   await client
+//     .from("user_links")
+//     .insert({
+//       user_id: user_details.user.id,
+//       juris_id: route_id, 
+//     })
+//     .select()
+//   is_liked.value = true
+// }
+// const unlike = async() => {
+//   try {await client
+//         .from("user_links")
+//         .delete()
+//         .match({
+//           user_id: user_details.user.id,
+//           juris_id: route_id, 
+//         })
+
+//   } finally {
+//     is_liked.value = false
+//   }
+// }
+//Remove the capability of the user to see the credentials because this is a security issue
+//Todo in the future
+const graphDriver = useDriver()
+
+
+// onServerPrefetch(async() => { 
+// if (user_details){
+//   console.log(user_details.user?.id)
+//   const {data}= await client.from("user_links")
+//                               .select()
+//                               .eq("user_id", user_details.user?.id)
+//                               .eq("juris_id", route_id)
+//                               .single()
+//   if(data) {
+//     is_liked.value = true
+//   }
+// }
+const query = queryNodeId(String(route_id))
+const test = await useGraphQuery(graphDriver, query)
+// console.log(query)
+// console.log(test)
+// const result =await session.executeRead(tx => {
+  //   return tx.run(
+  //     `MATCH (j :Juris {unique_id:`+ route_id+`})
+  //     RETURN j.file_url AS url
+  //     `,
+  //   )
+  // })Q
+file_source.value = (test[0].file_url)
+// on application exit:
+await graphDriver.close() 
+console.log(test)
+useHead({
   title:test[0].name,
 })
   // })
