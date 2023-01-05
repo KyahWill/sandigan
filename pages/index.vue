@@ -8,7 +8,9 @@ import TableContent from "~/types/tables"
 // const client = useSupabaseClient();
 // const user = useSupabaseUser();
 // const { data: user_details, error } = await client.auth.getUser();
+const firebase_app = getFirebaseApp();
 
+console.log(firebase_app)
 const graphDriver = useDriver()
 const recentJuris: Ref<Array<TableContent>> = useState( "recommended", () => { return []});
 
