@@ -61,10 +61,14 @@ const test = await useGraphQuery(graphDriver, query)
   //     `,
   //   )
   // })Q
-file_source.value = (test[0].file_url)
+const app = getFirebaseApp()
+const storage = getStorages(app)
+
+file_source.value = await getFile(storage, test[0].file_url) 
 // on application exit:
 await graphDriver.close() 
-console.log(test)
+
+// get firebase storage 
 useHead({
   title:test[0].name,
 })
@@ -83,10 +87,10 @@ useHead({
       </button>
     </div> -->
     
-    <embed
+    <iframe
       id="iframe" 
-      type="text/html"
-      :src="'/'+file_source" />
+     
+      :src=file_source />
 
   </div>
 </template>
