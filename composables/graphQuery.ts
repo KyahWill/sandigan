@@ -48,10 +48,12 @@ export const createTableContent = async(juris: Promise<any[]>, graphDriver: Driv
   return output
 } 
 
-export const queryLatestExperiment = () => {
+export const queryLatestExperiment = (page: number, limit: number=10) => { 
   return `
   MATCH (juris :Juris) 
-  with juris Order by juris.year desc limit 10
+  with juris 
+  Order by juris.year desc, juris.month desc, juris.day desc 
+  Skip `+String(page*limit)+` LIMIT `+String(limit)+`
   MATCH (juris) --> (legalTerm :LegalTerm)
   return juris, collect(legalTerm.Title)
   `

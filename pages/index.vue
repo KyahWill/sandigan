@@ -8,15 +8,25 @@ import TableContent from "~/types/tables"
 // const client = useSupabaseClient();
 // const user = useSupabaseUser();
 // const { data: user_details, error } = await client.auth.getUser();
-const firebase_app = getFirebaseApp();
-
+// const firebase_app = getFirebaseApp();
+const page = ref(0)
 const graphDriver = useDriver()
 const recentJuris: Ref<Array<TableContent>> = useState( "recommended", () => { return []});
-
+const previous = () => {
+  page.value--
+}
+const next = () => {
+  page.value++
+}
 // onMounted( async()=> {
-  recentJuris.value =  await useGraphQueryExperiment(graphDriver,queryLatestExperiment())
+  recentJuris.value =  await useGraphQueryExperiment(graphDriver,queryLatestExperiment(page.value))
 // })
 
+
+watch(page, async (newPage, oldQuestion) => {
+  recentJuris.value =  await useGraphQueryExperiment(graphDriver,queryLatestExperiment(page.value))
+
+})
 // const query: String = queryLatest()
 // const juris = useGraphQuery(graphDriver, query)
 // recentJuris.value = await createTableContent(juris,graphDriver)
@@ -42,6 +52,26 @@ useHead({
     <section class="w-9/12 mx-auto" >
       <h2 class="text-xl">New Labor Case</h2>
       <TableComponent :tableItem="recentJuris" />
+      <div class="flex justify-center">
+        <nav aria-label="Page navigation example">
+          <ul class="flex list-style-none">
+            <li class="page-item" @click="previous" v-if="page > 0">
+              <a
+                class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 focus:shadow-none"
+                href="#"
+              >Previous
+              </a>
+            </li>
+            <li class="page-item"  @click="next">
+              <a
+                class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
+                href="#"
+              >Next
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </section>
     <br />
   </div>
