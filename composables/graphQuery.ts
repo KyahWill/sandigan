@@ -30,23 +30,6 @@ export const useGraphQueryExperiment =  async(driver: Driver, query: String): Pr
   return output
 }
 
-export const createTableContent = async(juris: Promise<any[]>, graphDriver: Driver): TableContent[] => {
-  const output = await Promise.all((await juris)
-  .map(async(item: Array<any>) => {
-    const tags = (await useGraphQuery(graphDriver, queryTags(item.unique_id)))
-    .map((tag) => {
-      return tag.Title
-    })
-    return {
-      title: item.name,
-      link: String(item.unique_id),
-      tags: tags,
-      date: item.month+"-"+item.day+"-"+item.year
-    }
-  })
-  )
-  return output
-} 
 
 export const queryLatestExperiment = (page: number, limit: number=10) => { 
   return `
@@ -54,7 +37,7 @@ export const queryLatestExperiment = (page: number, limit: number=10) => {
   with juris 
   Order by juris.year desc, juris.month desc, juris.day desc 
   Skip `+String(page*limit)+` LIMIT `+String(limit)+`
-  MATCH (juris) --> (legalTerm :LegalTerm)
+  OPTIONAL MATCH (juris) --> (legalTerm :LegalTerm)
   return juris, collect(legalTerm.Title)
   `
 }
@@ -65,33 +48,41 @@ export const queryNodeId = (id: String) => {
   RETURN j
   `
 }
-export const queryLatest = () => {
-    return `
-    MATCH (juris :Juris)
-    return juris
 
-    order by juris.year
-    desc
-    limit 1;
-    `
-}
 export const querySearch = (search :String) => {
     return `
     MATCH (juris :Juris)
     WHERE juris.name  CONTAINS '`+search+`'
     with juris Order by juris.year desc limit 10
-    MATCH (juris) --> (legalTerm :LegalTerm)
+    OPTIONAL MATCH (juris) --> (legalTerm :LegalTerm)
     return juris, collect(legalTerm.Title)
     `
 }
-export const queryTags = (juris :String) => {
-  return  `
-    Match (:Juris {unique_id:` +
-      juris +
-      `}) -- (n) 
-    Return n
-    Limit 10  
-  `
+// export const queryTags = (juris :String) => {
+//   return  `
+//     Match (:Juris {unique_id:` +
+//       juris +
+//       `}) -- (n) 
+//     Return n
+//     Limit 10  
+//   `
   
 
-}
+// }
+// export const createTableContent = async(juris: Promise<any[]>, graphDriver: Driver): TableContent[] => {
+//   const output = await Promise.all((await juris)
+//   .map(async(item: Array<any>) => {
+//     const tags = (await useGraphQuery(graphDriver, queryTags(item.unique_id)))
+//     .map((tag) => {
+//       return tag.Title
+//     })
+//     return {
+//       title: item.name,
+//       link: String(item.unique_id),
+//       tags: tags,
+//       date: item.month+"-"+item.day+"-"+item.year
+//     }
+//   })
+//   )
+//   return output
+// } 
