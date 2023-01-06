@@ -4,7 +4,7 @@ const links = [
   { name: "Browse", link: "/browse" },
 ];
 
-
+const user = false
 
 
 const logout = async() => {

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
   // const client = useSupabaseClient()
+import axios from 'axios'
 const file_source = useState('jurisprudence', () =>{return ''})
 
 // const user = useSupabaseUser()
@@ -65,8 +66,16 @@ const app = getFirebaseApp()
 const storage = getStorages(app)
 
 file_source.value = await getFile(storage, test[0].file_url) 
+
+
+const data: string = (await axios.get(file_source.value)).data
+const myregex = /^[\s\S]*<body[^\>]*>([\s\S]*)<\/body>[\s\S]*$/igm
+const match = myregex.exec(data)
+const output  = match[1]
+// const style = data.match(/((<\/)style(>)) /g)
 // on application exit:
 await graphDriver.close() 
+
 
 // get firebase storage 
 useHead({
@@ -77,7 +86,7 @@ useHead({
 </script>
 
 <template>
-  <div class="flex flex-col w-5/6 mx-auto" >
+  <div class="flex flex-col w-7/8 mx-auto" >
     <!-- <div v-if="user" class="button">
       <button v-if="is_liked" @click="unlike">
         <p >Liked</p>
@@ -86,11 +95,11 @@ useHead({
         <p >Like</p>
       </button>
     </div> -->
-    
-    <iframe
-      id="iframe" 
-     
-      :src=file_source />
+      <div
+      id="juris_cases"
+      class="w-5/6 mx-auto bg-white p-3 border border-black rounded-xl"
+      v-html=output />
+
 
   </div>
 </template>
@@ -102,7 +111,7 @@ useHead({
     border-radius: 5px;
     padding:2px;
   }
-  #iframe {
-    height:600px;
-  }
+
+
+
 </style>

@@ -25,6 +25,7 @@
     "@mdi/font": "^7.0.96",
     "@pinia/nuxt": "^0.4.6",
     "add": "^2.0.6",
+    "axios": "^1.2.2",
     "eslint": "^8.28.0",
     "firebase": "^9.15.0",
     "neo4j-driver": "^5.3.0",
