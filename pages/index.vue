@@ -57,16 +57,18 @@ useHead({
           <ul class="flex list-style-none">
             <li class="page-item" @click="previous" v-if="page > 0">
               <a
-                class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 focus:shadow-none"
+                class="page-link bg-white relative block py-1.5 px-3 rounded border text-lg border-black outline-none transition-all duration-300  text-gray-800 hover:text-gray-800 focus:shadow-none"
                 href="#"
-              >Previous
+              >
+              Previous
               </a>
             </li>
             <li class="page-item"  @click="next">
               <a
-                class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
+                class="page-link bg-white relative block py-1.5 px-3 rounded border text-lg border-black  outline-none transition-all duration-300 text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
                 href="#"
-              >Next
+              >
+              Next
               </a>
             </li>
           </ul>

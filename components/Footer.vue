@@ -9,7 +9,7 @@
 </script>
 
 <template>
-  <footer>
+  <footer class="">
     <p>
       Copyright © 2022 Sandigan. All Rights Reserved. 
     </p>
