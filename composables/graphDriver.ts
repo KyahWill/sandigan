@@ -1,9 +1,10 @@
-import neo4j from "neo4j-driver";
+import { driver, auth } from 'neo4j-driver'
 
-export const useDriver =  () => {
-    return neo4j.driver(
-        "neo4j+s://60318b06.databases.neo4j.io",
-        neo4j.auth.basic("neo4j", "Cq-Of1FHfShywvyaq0RpAJaOmIHA6ZVPW9yB6UxxXs8")
-      );
+export const useDriver = () => {
+  const neo4jDriver = driver(
+    'bolt://159.65.141.247:7687',
+    auth.basic('neo4j', 'sandigan_thesis')
+  )
+  console.log(neo4jDriver)
+  return neo4jDriver
 }
-

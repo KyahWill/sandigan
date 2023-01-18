@@ -1,42 +1,41 @@
 <script lang="ts" setup>
-  // const client = useSupabaseClient()
+// const client = useSupabaseClient()
 import axios from 'axios'
-const file_source = useState('jurisprudence', () =>{return ''})
+const file_source = useState('jurisprudence', () => { return '' })
 
-const route = useRoute();
+const route = useRoute()
 const route_id = route.params.id
 
 const graphDriver = useDriver()
 const query = queryNodeId(String(route_id))
-const test = await useGraphQuery(graphDriver, query)
 
+const test = await useGraphQuery(graphDriver, query)
+console.log(test)
 const app = getFirebaseApp()
 const storage = getStorages(app)
 
-file_source.value = await getFile(storage, test[0].file_url) 
 
-
+file_source.value = await getFile(storage, test[0].file_url)
+console.log(file_source.value)
 const data: string = (await axios.get(file_source.value)).data
-const myregex = /^[\s\S]*<body[^\>]*>([\s\S]*)<\/body>[\s\S]*$/igm
+const myregex = /^[\s\S]*<body>([\s\S]*)<\/body>[\s\S]*$/igm
 const match = myregex.exec(data)
-const output  = match![1]
-await graphDriver.close() 
+const output = match![1]
+graphDriver.close()
 useHead({
-  title:test[0].name,
+  title: test[0].name
 })
 // const user = useSupabaseUser()
 // const {data:user_details, error }= await client.auth.getUser()
 
-// const is_liked = ref(false)  
-
-
+// const is_liked = ref(false)
 
 // const like = async() => {
 //   await client
 //     .from("user_links")
 //     .insert({
 //       user_id: user_details.user.id,
-//       juris_id: route_id, 
+//       juris_id: route_id,
 //     })
 //     .select()
 //   is_liked.value = true
@@ -47,29 +46,28 @@ useHead({
 //         .delete()
 //         .match({
 //           user_id: user_details.user.id,
-//           juris_id: route_id, 
+//           juris_id: route_id,
 //         })
 
 //   } finally {
 //     is_liked.value = false
 //   }
 // }
-//Remove the capability of the user to see the credentials because this is a security issue
-//Todo in the future
-
+// Remove the capability of the user to see the credentials because this is a security issue
+// Todo in the future
 
 // console.log(query)
 // console.log(test)
 // const result =await session.executeRead(tx => {
-  //   return tx.run(
-  //     `MATCH (j :Juris {unique_id:`+ route_id+`})
-  //     RETURN j.file_url AS url
-  //     `,
-  //   )
-  // })Q
+//   return tx.run(
+//     `MATCH (j :Juris {unique_id:`+ route_id+`})
+//     RETURN j.file_url AS url
+//     `,
+//   )
+// })Q
 
-  // })
-// onServerPrefetch(async() => { 
+// })
+// onServerPrefetch(async() => {
 // if (user_details){
 //   console.log(user_details.user?.id)
 //   const {data}= await client.from("user_links")
@@ -84,7 +82,7 @@ useHead({
 </script>
 
 <template>
-  <div class="flex flex-col w-7/8 mx-auto" >
+  <div class="flex flex-col w-7/8 mx-auto">
     <!-- <div v-if="user" class="button">
       <button v-if="is_liked" @click="unlike">
         <p >Liked</p>
@@ -93,12 +91,11 @@ useHead({
         <p >Like</p>
       </button>
     </div> -->
-      <div
+    <div
       id="juris_cases"
       class="w-5/6 mx-auto bg-white p-3 border border-black rounded-xl"
-      v-html=output />
-
-
+      v-html="output"
+    />
   </div>
 </template>
 
@@ -109,7 +106,5 @@ useHead({
     border-radius: 5px;
     padding:2px;
   }
-
-
 
 </style>
