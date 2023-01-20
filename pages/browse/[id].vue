@@ -21,7 +21,7 @@ const data: string = (await axios.get(file_source.value)).data
 const myregex = /^[\s\S]*<body>([\s\S]*)<\/body>[\s\S]*$/igm
 const match = myregex.exec(data)
 const output = match![1]
-graphDriver.close()
+await graphDriver.close()
 useHead({
   title: test[0].name
 })

@@ -12,14 +12,20 @@ export const useGraphQuery = async (driver: Driver, query: String): Promise<Arra
       })
     })
   } catch (error) {
-    console.log('Error when creating outputs: ' + error )
+    console.log('Error when creating outputs: ' + error)
   }
-  
+
   await session.close()
   return output
 }
 export const useGraphQueryExperiment = async (driver: Driver, query: String): Promise<Array<TableContent>> => {
-  const session = driver.session()
+  let session
+  try {
+    session = driver.session()
+  } catch (error) {
+    console.log(error)
+    return []
+  }
   console.log(session)
   let output
   try {

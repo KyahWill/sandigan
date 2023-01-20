@@ -24,7 +24,7 @@ const next = () => {
 recentJuris.value = await useGraphQueryExperiment(graphDriver, queryLatestExperiment(page.value))
 console.log(recentJuris.value)
 // })
-
+await graphDriver.close()
 watch(page, async () => {
   recentJuris.value = await useGraphQueryExperiment(graphDriver, queryLatestExperiment(page.value))
 })
