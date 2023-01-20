@@ -14,7 +14,7 @@ const graphDriver = useDriver()
 
 const recentJuris: Ref<Array<TableContent>> = useState('recommended', () => { return [] })
 
-  const previous = () => {
+const previous = () => {
   page.value--
 }
 const next = () => {
@@ -22,7 +22,6 @@ const next = () => {
 }
 // onMounted( async()=> {
 recentJuris.value = await useGraphQueryExperiment(graphDriver, queryLatestExperiment(page.value))
-console.log(recentJuris.value)
 // })
 await graphDriver.close()
 watch(page, async () => {

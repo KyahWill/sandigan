@@ -10,10 +10,8 @@ const graphDriver = useDriver()
 const query = queryNodeId(String(route_id))
 
 const test = await useGraphQuery(graphDriver, query)
-console.log(test)
 const app = getFirebaseApp()
 const storage = getStorages(app)
-
 
 file_source.value = await getFile(storage, test[0].file_url)
 console.log(file_source.value)

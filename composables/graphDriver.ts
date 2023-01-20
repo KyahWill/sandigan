@@ -5,6 +5,5 @@ export const useDriver = () => {
     'bolt+s://db.sandigan.org:7687',
     auth.basic('neo4j', 'sandigan_thesis')
   )
-  console.log(neo4jDriver)
   return neo4jDriver
 }

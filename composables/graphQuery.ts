@@ -2,51 +2,30 @@ import { Driver } from 'neo4j-driver'
 import TableContent from 'types/tables'
 export const useGraphQuery = async (driver: Driver, query: String): Promise<Array<any>> => {
   const session = driver.session()
-  let output
-  try {
-    output = await session.executeRead(async (tx: any) => {
-      const graphTransaction = await tx.run(query)
-      console.log('Graph Transaction ' + graphTransaction)
-      return graphTransaction.records.map((item: any) => {
-        return item.get(0).properties
-      })
+  const output = await session.executeRead(async (tx: any) => {
+    const graphTransaction = await tx.run(query)
+    return graphTransaction.records.map((item: any) => {
+      return item.get(0).properties
     })
-  } catch (error) {
-    console.log('Error when creating outputs: ' + error)
-  }
-
+  })
   await session.close()
   return output
 }
 export const useGraphQueryExperiment = async (driver: Driver, query: String): Promise<Array<TableContent>> => {
-  let session
-  try {
-    session = driver.session()
-  } catch (error) {
-    console.log(error)
-    return []
-  }
-  console.log(session)
-  let output
-  try {
-    output = await session.executeRead(async (tx: any) => {
-      const graphTransaction = await tx.run(query)
-      return graphTransaction.records.map((item: any) => {
-        const properties = item.get(0).properties
-        console.log(properties)
-        return {
-          title: properties.name,
-          link: String(properties.unique_id),
-          tags: item.get(1),
-          date: properties.month + '-' + properties.day + '-' + properties.year
-        }
-        // [item.get(0).properties, item.get(1)];
-      })
+  const session = driver.session()
+  const output = await session.executeRead(async (tx: any) => {
+    const graphTransaction = await tx.run(query)
+    return graphTransaction.records.map((item: any) => {
+      const properties = item.get(0).properties
+      return {
+        title: properties.name,
+        link: String(properties.unique_id),
+        tags: item.get(1),
+        date: properties.month + '-' + properties.day + '-' + properties.year
+      }
+      // [item.get(0).properties, item.get(1)];
     })
-  } catch (error) {
-    console.log(error)
-  }
-
+  })
   await session.close()
   return output
 }

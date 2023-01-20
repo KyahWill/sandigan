@@ -1,24 +1,23 @@
 <!-- eslint-disable import/no-named-as-default-member -->
 <script lang="ts" setup>
-import { Ref } from "vue";
-import TableContent from "~/types/tables";
+import { Ref } from 'vue'
+import TableContent from '~/types/tables'
 
-const route = useRoute();
-const routeName = ref("")
-onMounted(async()=> {
-  routeName.value = String(route.query.search);
-  const query = (route.query.search)?  querySearch(String(routeName.value).toUpperCase()): queryLatestExperiment(0)
-  tableData.value =  await useGraphQueryExperiment(graphDriver,query)
+const route = useRoute()
+const routeName = ref('')
+onMounted(async () => {
+  routeName.value = String(route.query.search)
+  const query = (route.query.search) ? querySearch(String(routeName.value).toUpperCase()) : queryLatestExperiment(0)
+  tableData.value = await useGraphQueryExperiment(graphDriver, query)
 })
 
-watch(route, async (newRoute, oldQuestion) => {
-  const query = (newRoute.query.search)?  querySearch(String(newRoute.query.search).toUpperCase()): queryLatestExperiment(0)
-  tableData.value =  await useGraphQueryExperiment(graphDriver,query)
+watch(route, async (newRoute) => {
+  const query = (newRoute.query.search) ? querySearch(String(newRoute.query.search).toUpperCase()) : queryLatestExperiment(0)
+  tableData.value = await useGraphQueryExperiment(graphDriver, query)
   // recentJuris.value =  await useGraphQueryExperiment(graphDriver,queryLatestExperiment(newRouteName))
-  console.log(routeName)
 })
 const graphDriver = useDriver()
-const tableData: Ref<Array<TableContent>> = useState('tableData',() =>[]);
+const tableData: Ref<Array<TableContent>> = useState('tableData', () => [])
 
 // console.log(query)
 // const juris = useGraphQuery(graphDriver, query)
@@ -26,7 +25,7 @@ const tableData: Ref<Array<TableContent>> = useState('tableData',() =>[]);
 
 // console.log(tableData.value)
 useHead({
-  title:"Browse Jurisprudence",
+  title: 'Browse Jurisprudence'
 })
 
 </script>
