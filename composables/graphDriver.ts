@@ -4,7 +4,7 @@ export const useDriver = () => {
   const neo4jDriver = driver(
     'bolt://159.65.141.247:7687',
     auth.basic('neo4j', 'sandigan_thesis'),
-    { encrypted: 'ENCRYPTION_OFF' }
+    { encrypted: 'ENCRYPTION_OFF', trust: 'TRUST_ALL_CERTIFICATES' }
   )
   console.log(neo4jDriver)
   return neo4jDriver
