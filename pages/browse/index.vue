@@ -37,7 +37,7 @@ useHead({
     </section>
     <br /><br /> -->
     <section class="browse_cases">
-      <BrowseFilter />
+      <BrowseFilter :graph-driver="graphDriver" />
 
       <div class="table_list">
         <h2>Recent Cases</h2>

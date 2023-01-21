@@ -47,6 +47,20 @@ export const queryNodeId = (id: String) => {
   RETURN j
   `
 }
+export const queryLegalTerms = () => {
+  return `
+  MATCH (j :legalTerm)
+  RETURN j
+  `
+}
+export const queryCitedCases = (id: String) => {
+  return `
+  MATCH (:Juris {unique_id:'` + id + `'}) <-[:CITES]- (juris:Juris)
+  with juris
+  OPTIONAL MATCH (juris) --> (legTerm :legalTerm)
+  return juris, collect(legTerm.title)
+  `
+}
 
 export const querySearch = (search :String) => {
   return `
