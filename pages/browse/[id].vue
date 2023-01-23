@@ -21,7 +21,6 @@ const cited_jurisprudence = await useGraphQueryExperiment(graphDriver, citation_
 
 cases_cited.value = cited_jurisprudence
 file_source.value = await getFile(storage, jurisprudence[0].file_url)
-console.log(cited_jurisprudence)
 
 const data: string = (await axios.get(file_source.value)).data
 const myregex = /^[\s\S]*<body>([\s\S]*)<\/body>[\s\S]*$/igm
@@ -88,7 +87,7 @@ useHead({
 </script>
 
 <template>
-  <div class="flex flex-col">
+  <div class="flex flex-row">
     <!-- <div v-if="user" class="button">
       <button v-if="is_liked" @click="unlike">
         <p >Liked</p>
@@ -99,17 +98,16 @@ useHead({
     </div> -->
     <div
       id="juris_cases"
-      class="mx-auto bg-white p-3 border border-black rounded-xl"
+      class="mx-auto w-3/4 bg-white p-3 border border-black rounded-xl"
       v-html="output"
     />
     <br>
-    <div v-if="cases_cited.length > 0">
+    <div class=" ml-5 w-96">
       <div class="mt-4">
         <p class="text-xl">
           Cases that cited this:
         </p>
       </div>
-
       <TableComponent :table-item="cases_cited" />
     </div>
   </div>
