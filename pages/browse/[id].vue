@@ -88,7 +88,7 @@ useHead({
 </script>
 
 <template>
-  <div class="flex flex-col w-9/12 mx-auto">
+  <div class="flex flex-col">
     <!-- <div v-if="user" class="button">
       <button v-if="is_liked" @click="unlike">
         <p >Liked</p>

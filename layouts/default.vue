@@ -3,13 +3,16 @@
 </script>
 
 <template>
-    
+  <section>
     <div class="bg-gray-200 min-h-screen ">
       <NavMenu />
-      <slot />
-      <div class="h-16"/>
+      <div class="w-11/12 mx-auto">
+        <slot />
+      </div>
+      <div class="h-16" />
     </div>
-  <Footer />
+    <Footer />
+  </section>
 </template>
 
 <style scoped>

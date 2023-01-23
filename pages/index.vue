@@ -49,9 +49,9 @@ useHead({
     </section> -->
     <br>
     <br>
-    <section class="w-9/12 mx-auto">
+    <section class="mx-auto">
       <h2 class="text-xl">
-        New Labor Case
+        Recent Cases
       </h2>
       <TableComponent :table-item="recentJuris" />
       <div class="flex justify-center">

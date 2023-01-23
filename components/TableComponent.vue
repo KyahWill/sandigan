@@ -23,7 +23,7 @@ const props = defineProps({
           <p
             v-for="(tag, tagIndex) in tableData.tags"
             :key="tagIndex"
-            class="text-smaller bg-black text-white px-1 mt-2 mx-1"
+            class="text-smaller bg-black text-white px-1 rounded mt-2 mx-1"
           >
             {{ tag }}
           </p>

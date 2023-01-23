@@ -1,22 +1,21 @@
 <script lang="ts" setup>
 
-  const links = [
-    {name:"Home",  link:"/"},
+const links = [
+  { name: 'Home', link: '/' }
   //  {name:"About", link:"/browse"},
   //  {name:"Terms of Service", link:"/forum"},
   //  {name:"Privacy Policy", link:"/cases"},
-  ]
+]
 </script>
 
 <template>
   <footer class="">
     <p>
-      Copyright © 2022 Sandigan. All Rights Reserved. 
+      Copyright © 2022 Sandigan. All Rights Reserved.
     </p>
-    <div class="spacer" style="width: 100px;"> 
-    </div>
+    <div class="spacer" style="width: 100px;" />
     <NuxtLink
-      v-for="link in links" 
+      v-for="link in links"
       :key="link.name"
       :to="link.link"
       class="links"
