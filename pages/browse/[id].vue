@@ -109,6 +109,17 @@ useHead({
         </p>
       </div>
       <TableComponent :table-item="cases_cited" />
+      <amp-ad
+        width="100vw"
+        height="320"
+        type="adsense"
+        data-ad-client="ca-pub-3605390577343754"
+        data-ad-slot="2119029745"
+        data-auto-format="rspv"
+        data-full-width=""
+      >
+        <div overflow="" />
+      </amp-ad>
     </div>
   </div>
 </template>
