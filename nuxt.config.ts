@@ -16,7 +16,7 @@ export default defineNuxtConfig({
         {
           src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js',
           'data-ad-client': 'ca-pub-360539057734375',
-          async: true
+          async,
         },
         {
           src: 'https://cdn.ampproject.org/v0/amp-ad-0.1.js',
