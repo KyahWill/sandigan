@@ -8,16 +8,14 @@ export default defineNuxtConfig({
     messagingSenderId: process.env.messagingSenderId,
     appId: process.env.appId
   },
-  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt'],
+  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', ['@nuxtjs/google-adsense', {
+    id: 'ca-pub-360539057734375',
+    test: true
+  }]],
   css: ['~/assets/styles/main.css'],
   app: {
     head: {
       script: [
-        {
-          src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js',
-          'data-ad-client': 'ca-pub-360539057734375',
-          async,
-        },
         {
           src: 'https://cdn.ampproject.org/v0/amp-ad-0.1.js',
           'data-custom-element': 'amp-ad'
