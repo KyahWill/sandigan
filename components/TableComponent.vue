@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import TableContents from '~/types/tables'
+import TableContent from '~/types/tables'
 const props = defineProps({
   tableItem: {
-    type: Array<TableContents>,
+    type: Array<TableContent>,
     required: true
   }
 })

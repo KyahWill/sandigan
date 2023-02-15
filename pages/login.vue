@@ -1,16 +1,33 @@
 <script lang="ts" setup>
-  const email = ref('')
-  const password = ref('')
-  // const client = useSupabaseClient()
-  const login = async (event:any) => {
-    event.preventDefault()
+import {
+  EmailAuthProvider,
+  GoogleAuthProvider,
+  getAuth
+} from 'firebase/auth'
 
-    // const {data, error} = await client.auth.signInWithPassword({
-    //   email: email.value,
-    //   password: password.value,
-    // })
-    // if(data) { navigateTo("/") }
-  }
+const firebaseui = await import('firebaseui')
+
+const email = ref('')
+const password = ref('')
+// const client = useSupabaseClient()
+const login = (event:any) => {
+  event.preventDefault()
+  // const {data, error} = await client.auth.signInWithPassword({
+  //   email: email.value,
+  //   password: password.value,
+  // })
+  // if(data) { navigateTo("/") }
+}
+const uiConfig = {
+  signInSuccessUrl: '/success',
+  signInOptions: [
+    GoogleAuthProvider.PROVIDER_ID,
+    EmailAuthProvider.PROVIDER_ID
+  ]
+}
+
+const ui = new firebaseui.auth.AuthUI(getAuth())
+ui.start('#firebaseui-auth-container', uiConfig)
 </script>
 
 <template>
@@ -19,20 +36,25 @@
       <div class="title">
         <h2>SANDIGAN</h2>
       </div>
-      <br />
+      <br>
       <div class="login_form">
-      <!-- How the fuck does this work? I will never know-->
-      <p>Email Ad:        
-        <input type="text" v-model="email"/>  
-      </p>
+        <!-- How the fuck does this work? I will never know-->
+        <p>
+          Email Ad:
+          <input v-model="email" type="text">
+        </p>
 
-      <br />
-      <p>Password:  
-        <input type="password" v-model="password"/>
-      </p>
-      <br />
-      <button @click="login"> Login</button>
+        <br>
+        <p>
+          Password:
+          <input v-model="password" type="password">
+        </p>
+        <br>
+        <button @click="login">
+          Login
+        </button>
       </div>
+      <div id="firebaseui-auth-container" />
     </section>
   </form>
 </template>

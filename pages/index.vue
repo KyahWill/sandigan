@@ -14,6 +14,8 @@ const graphDriver = useDriver()
 
 const recentJuris: Ref<Array<TableContent>> = useState('recommended', () => { return [] })
 
+const prediction = predict(2)
+console.log(prediction)
 const previous = () => {
   page.value--
 }

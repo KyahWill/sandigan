@@ -1,5 +1,5 @@
 <script setup>
-import { Driver } from 'neo4j-driver-core';
+import { Driver } from 'neo4j-driver-core'
 
 const filterText = ref('')
 const props = defineProps({
