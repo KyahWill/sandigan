@@ -11,11 +11,9 @@ import TableContent from '~/types/tables'
 // const firebase_app = getFirebaseApp();
 const page = ref(0)
 const graphDriver = useDriver()
-
 const recentJuris: Ref<Array<TableContent>> = useState('recommended', () => { return [] })
-
-const prediction = predict(2)
-console.log(prediction)
+// const prediction = predict(2)
+// console.log(prediction)
 const previous = () => {
   page.value--
 }

@@ -8,13 +8,11 @@ const submit = () => {
 </script>
 <template>
   <section class="flex flex-row px-40 ">
-    <!-- Here is the search Icon and title-->
     <form class="flex flex-row items-center text-black w-full" @submit.prevent="submit">
       <img src="~/assets/images/SearchLogo.png" style="width:82;height:90">
       <h3 class="text-5xl">
         Sandigan
       </h3>
-      <!-- Here is the search bar -->
       <div class="relative w-full">
         <div class="absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none">
           <svg
